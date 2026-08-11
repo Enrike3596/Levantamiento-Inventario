@@ -1,6 +1,117 @@
 @InventarioTI.Api_HostAddress = http://localhost:5007
 
-GET {{InventarioTI.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+# ============ AUTH (anónimo) ============
 
-###
+### Login consola (JWT)
+POST {{InventarioTI.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@ti.com",
+  "password": "AdminTI@2026"
+}
+
+### Usuario autenticado (JWT)
+GET {{InventarioTI.Api_HostAddress}}/api/auth/me
+Authorization: Bearer {{jwt}}
+
+# ============ AGENTES ============
+
+### Registrar agente (admin) -> devuelve API Key
+POST {{InventarioTI.Api_HostAddress}}/api/agentes/registrar
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "nombreEquipo": "PC-ADMINISTRACION"
+}
+
+### Listar agentes (consola)
+GET {{InventarioTI.Api_HostAddress}}/api/agentes
+Authorization: Bearer {{jwt}}
+
+### Enviar reporte de equipo (API Key del agente)
+POST {{InventarioTI.Api_HostAddress}}/api/agentes/reporte
+X-Api-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "nombreEquipo": "PC-ADMINISTRACION",
+  "usuarioConectado": "enrique",
+  "dominio": "TI.LOCAL",
+  "ip": "192.168.1.50",
+  "mac": "AA:BB:CC:DD:EE:FF",
+  "sistemaOperativo": "Windows 11 Pro",
+  "versionSo": "24H2",
+  "ramGb": 16,
+  "procesador": "Intel Core i5-12400",
+  "discoGb": 512,
+  "espacioLibreGb": 210,
+  "numeroSerie": "SN-12345",
+  "fabricante": "Dell",
+  "modelo": "OptiPlex 7000",
+  "antivirus": "Windows Defender",
+  "ultimoReinicio": "2026-08-11T08:00:00Z",
+  "programas": {
+    "chrome": "126.0.0.1",
+    "office": "16.0.1"
+  }
+}
+
+# ============ EQUIPOS ============
+
+### Listar equipos (consola)
+GET {{InventarioTI.Api_HostAddress}}/api/equipos
+Authorization: Bearer {{jwt}}
+
+### Equipos conectados en últimos 15 min
+GET {{InventarioTI.Api_HostAddress}}/api/equipos/conectados?minutos=15
+Authorization: Bearer {{jwt}}
+
+# ============ SWITCHES ============
+
+### Enviar reporte de switch (API Key)
+POST {{InventarioTI.Api_HostAddress}}/api/switches/reporte
+X-Api-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "ip": "192.168.1.254",
+  "nombre": "SW-OFICINA-1",
+  "marca": "Cisco",
+  "modelo": "SG350-28",
+  "serial": "CISCO-SW-001",
+  "firmware": "2.5.0.97",
+  "totalPuertos": 24,
+  "estado": "Operativo",
+  "puertos": [
+    { "numeroPuerto": 1, "estado": "up", "vlan": 10, "traficoInMb": 5.2, "traficoOutMb": 3.1 },
+    { "numeroPuerto": 2, "estado": "down", "vlan": 10 },
+    { "numeroPuerto": 3, "estado": "up", "vlan": 20, "traficoInMb": 1.5, "traficoOutMb": 0.8 }
+  ]
+}
+
+### Listar switches (consola)
+GET {{InventarioTI.Api_HostAddress}}/api/switches
+Authorization: Bearer {{jwt}}
+
+### Puertos de un switch (consola)
+GET {{InventarioTI.Api_HostAddress}}/api/switches/{{switchId}}/puertos
+Authorization: Bearer {{jwt}}
+
+# ============ USUARIOS (admin) ============
+
+### Listar usuarios
+GET {{InventarioTI.Api_HostAddress}}/api/usuarios
+Authorization: Bearer {{jwt}}
+
+### Crear usuario
+POST {{InventarioTI.Api_HostAddress}}/api/usuarios
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "email": "tecnico@ti.com",
+  "password": "TecnicoTI@2026",
+  "rol": "Tecnico"
+}
