@@ -1,9 +1,12 @@
-@InventarioTI.Api_HostAddress = http://localhost:5007
+@InventarioTI_Api_HostAddress = http://localhost:5007
+@jwt = <your_jwt_here>
+@apiKey = <your_api_key_here>
+@switchId = 1
 
 # ============ AUTH (anónimo) ============
 
 ### Login consola (JWT)
-POST {{InventarioTI.Api_HostAddress}}/api/auth/login
+POST {{InventarioTI_Api_HostAddress}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -12,13 +15,13 @@ Content-Type: application/json
 }
 
 ### Usuario autenticado (JWT)
-GET {{InventarioTI.Api_HostAddress}}/api/auth/me
+GET {{InventarioTI_Api_HostAddress}}/api/auth/me
 Authorization: Bearer {{jwt}}
 
 # ============ AGENTES ============
 
 ### Registrar agente (admin) -> devuelve API Key
-POST {{InventarioTI.Api_HostAddress}}/api/agentes/registrar
+POST {{InventarioTI_Api_HostAddress}}/api/agentes/registrar
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
@@ -27,11 +30,11 @@ Content-Type: application/json
 }
 
 ### Listar agentes (consola)
-GET {{InventarioTI.Api_HostAddress}}/api/agentes
+GET {{InventarioTI_Api_HostAddress}}/api/agentes
 Authorization: Bearer {{jwt}}
 
 ### Enviar reporte de equipo (API Key del agente)
-POST {{InventarioTI.Api_HostAddress}}/api/agentes/reporte
+POST {{InventarioTI_Api_HostAddress}}/api/agentes/reporte
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
 
@@ -61,17 +64,17 @@ Content-Type: application/json
 # ============ EQUIPOS ============
 
 ### Listar equipos (consola)
-GET {{InventarioTI.Api_HostAddress}}/api/equipos
+GET {{InventarioTI_Api_HostAddress}}/api/equipos
 Authorization: Bearer {{jwt}}
 
 ### Equipos conectados en últimos 15 min
-GET {{InventarioTI.Api_HostAddress}}/api/equipos/conectados?minutos=15
+GET {{InventarioTI_Api_HostAddress}}/api/equipos/conectados?minutos=15
 Authorization: Bearer {{jwt}}
 
 # ============ SWITCHES ============
 
 ### Enviar reporte de switch (API Key)
-POST {{InventarioTI.Api_HostAddress}}/api/switches/reporte
+POST {{InventarioTI_Api_HostAddress}}/api/switches/reporte
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
 
@@ -92,21 +95,21 @@ Content-Type: application/json
 }
 
 ### Listar switches (consola)
-GET {{InventarioTI.Api_HostAddress}}/api/switches
+GET {{InventarioTI_Api_HostAddress}}/api/switches
 Authorization: Bearer {{jwt}}
 
 ### Puertos de un switch (consola)
-GET {{InventarioTI.Api_HostAddress}}/api/switches/{{switchId}}/puertos
+GET {{InventarioTI_Api_HostAddress}}/api/switches/{{switchId}}/puertos
 Authorization: Bearer {{jwt}}
 
 # ============ USUARIOS (admin) ============
 
 ### Listar usuarios
-GET {{InventarioTI.Api_HostAddress}}/api/usuarios
+GET {{InventarioTI_Api_HostAddress}}/api/usuarios
 Authorization: Bearer {{jwt}}
 
 ### Crear usuario
-POST {{InventarioTI.Api_HostAddress}}/api/usuarios
+POST {{InventarioTI_Api_HostAddress}}/api/usuarios
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
