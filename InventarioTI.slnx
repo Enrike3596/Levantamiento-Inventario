@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="InventarioTI.Agente/InventarioTI.Agente.csproj" />
+  <Project Path="InventarioTI.Api/InventarioTI.Api.csproj" />
+  <Project Path="InventarioTI.Domain/InventarioTI.Domain.csproj" />
+  <Project Path="InventarioTI.Infrastructure/InventarioTI.Infrastructure.csproj" />
+  <Project Path="InventarioTI.PollerSnmp/InventarioTI.PollerSnmp.csproj" />
+</Solution>
